@@ -1,31 +1,31 @@
 package cn.xpbootcamp.locker_robot;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Locker {
 
     private int roomsCount;
-    private Set<Ticket> rooms = new HashSet<>();
+    private Map<Ticket, Bag> rooms = new HashMap<>();
 
     public Locker(int roomsCount) {
         this.roomsCount = roomsCount;
     }
 
-    public Ticket put() {
+    public Ticket put(Bag bag) {
         if (rooms.size() + 1 <= roomsCount) {
             Ticket ticket = new Ticket();
-            rooms.add(ticket);
+            rooms.put(ticket, bag);
             return ticket;
         } else {
-            throw new RuntimeException("");
+            throw new RuntimeException("No locker available.");
         }
     }
 
-    public void take(Ticket ticket) {
-        if (!rooms.contains(ticket)) {
-            throw new RuntimeException("");
+    public Bag take(Ticket ticket) {
+        if (!rooms.containsKey(ticket)) {
+            throw new RuntimeException("Ticket is invalid");
         }
-        rooms.remove(ticket);
+        return rooms.remove(ticket);
     }
 }
