@@ -12,9 +12,11 @@ public class Locker {
         this.roomsCount = roomsCount;
     }
 
-    public void open() {
+    public Ticket open() {
         if (rooms.size() + 1 <= roomsCount) {
-            rooms.add(new Ticket());
+            Ticket ticket = new Ticket();
+            rooms.add(ticket);
+            return ticket;
         } else {
             throw new RuntimeException("");
         }
