@@ -12,7 +12,7 @@ public class Locker {
         this.roomsCount = roomsCount;
     }
 
-    public Ticket open() {
+    public Ticket put() {
         if (rooms.size() + 1 <= roomsCount) {
             Ticket ticket = new Ticket();
             rooms.add(ticket);
@@ -23,6 +23,9 @@ public class Locker {
     }
 
     public void take(Ticket ticket) {
-
+        if (!rooms.contains(ticket)) {
+            throw new RuntimeException("");
+        }
+        rooms.remove(ticket);
     }
 }
