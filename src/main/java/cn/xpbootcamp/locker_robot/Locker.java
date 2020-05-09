@@ -21,4 +21,8 @@ public class Locker {
             throw new RuntimeException("");
         }
     }
+
+    public void take(Ticket ticket) {
+
+    }
 }
