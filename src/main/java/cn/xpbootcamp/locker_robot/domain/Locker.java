@@ -1,4 +1,7 @@
-package cn.xpbootcamp.locker_robot;
+package cn.xpbootcamp.locker_robot.domain;
+
+import cn.xpbootcamp.locker_robot.exception.NoLockerAvailableException;
+import cn.xpbootcamp.locker_robot.exception.TicketIsInvalidException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,14 +21,18 @@ public class Locker {
             rooms.put(ticket, bag);
             return ticket;
         } else {
-            throw new RuntimeException("No locker available.");
+            throw new NoLockerAvailableException();
         }
     }
 
     public Bag take(Ticket ticket) {
         if (!rooms.containsKey(ticket)) {
-            throw new RuntimeException("Ticket is invalid");
+            throw new TicketIsInvalidException();
         }
         return rooms.remove(ticket);
+    }
+
+    public int getStatus() {
+        return roomsCount - rooms.size();
     }
 }
