@@ -33,4 +33,11 @@ public class LockerTest {
         assertDoesNotThrow(() -> locker.take(ticket));
     }
 
+    @Test
+    void should_throw_exception_when_take_given_ticket_is_invalid() {
+        Locker locker = new Locker(1);
+        Ticket ticket = new Ticket();
+
+        assertThrows(RuntimeException.class, () -> locker.take(ticket));
+    }
 }
