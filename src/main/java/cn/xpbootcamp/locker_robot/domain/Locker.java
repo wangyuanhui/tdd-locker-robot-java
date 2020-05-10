@@ -16,13 +16,12 @@ public class Locker {
     }
 
     public Ticket put(Bag bag) {
-        if (rooms.size() + 1 <= roomsCount) {
-            Ticket ticket = new Ticket();
-            rooms.put(ticket, bag);
-            return ticket;
-        } else {
+        if (rooms.size() == roomsCount) {
             throw new NoLockerAvailableException();
         }
+        Ticket ticket = new Ticket();
+        rooms.put(ticket, bag);
+        return ticket;
     }
 
     public Bag take(Ticket ticket) {

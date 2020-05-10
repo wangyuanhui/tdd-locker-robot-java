@@ -56,7 +56,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_return_room_count_increase_when_check_locker_status_given_bag_in_it() {
+    void should_return_room_count_decrease_when_check_locker_status_given_bag_in_it() {
         Locker locker = new Locker(2);
         assertEquals(2, locker.getStatus());
 
@@ -65,7 +65,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_return_room_count_decrease_when_check_locker_status_given_bag_out() {
+    void should_return_room_count_increase_when_check_locker_status_given_bag_out() {
         Locker locker = new Locker(2);
         assertEquals(2, locker.getStatus());
 
