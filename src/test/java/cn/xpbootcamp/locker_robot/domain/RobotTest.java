@@ -1,6 +1,7 @@
 package cn.xpbootcamp.locker_robot.domain;
 
 import cn.xpbootcamp.locker_robot.exception.TicketIsInvalidException;
+import cn.xpbootcamp.locker_robot.exception.TicketIsInvalidForRobotException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -83,7 +84,7 @@ public class RobotTest {
         when(locker1.take(ticket)).thenThrow(TicketIsInvalidException.class);
         when(locker2.take(ticket)).thenThrow(TicketIsInvalidException.class);
 
-        assertThrows(TicketIsInvalidException.class, () -> robot.take(ticket));
+        assertThrows(TicketIsInvalidForRobotException.class, () -> robot.take(ticket));
 
         verify(locker1).take(ticket);
         verify(locker2).take(ticket);

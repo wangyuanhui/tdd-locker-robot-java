@@ -1,6 +1,9 @@
 package cn.xpbootcamp.locker_robot.domain;
 
 
+import cn.xpbootcamp.locker_robot.exception.TicketIsInvalidException;
+import cn.xpbootcamp.locker_robot.exception.TicketIsInvalidForRobotException;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +25,16 @@ public class Robot {
     }
 
     public Bag take(Ticket ticket) {
-        return null;
+        Bag bag = null;
+        for (Locker locker : lockers) {
+            try {
+                bag = locker.take(ticket);
+            } catch (TicketIsInvalidException ignore) {
+            }
+        }
+        if (bag == null) {
+            throw new TicketIsInvalidForRobotException();
+        }
+        return bag;
     }
 }
