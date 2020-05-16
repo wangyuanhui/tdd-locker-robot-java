@@ -1,6 +1,7 @@
 package cn.xpbootcamp.locker_robot.domain;
 
 
+import cn.xpbootcamp.locker_robot.exception.LockersAreFullException;
 import cn.xpbootcamp.locker_robot.exception.TicketIsInvalidException;
 import cn.xpbootcamp.locker_robot.exception.TicketIsInvalidForRobotException;
 
@@ -21,7 +22,7 @@ public class Robot {
             }
         }
 
-        throw new RuntimeException("All lockers are full");
+        throw new LockersAreFullException();
     }
 
     public Bag take(Ticket ticket) {
