@@ -55,4 +55,22 @@ public class RobotTest {
         verify(locker1).put(bag);
         verify(locker2, never()).put(bag);
     }
+
+
+    @Test
+    void should_return_ticket_of_locker1_when_put_given_locker1_is_full_and_locker2_available() {
+        Robot robot = new Robot(locker1, locker2);
+        Bag bag = mock(Bag.class);
+        Ticket ticket = mock(Ticket.class);
+        when(locker1.getStatus()).thenReturn(0);
+        when(locker2.getStatus()).thenReturn(3);
+        when(locker2.put(bag)).thenReturn(ticket);
+
+        assertEquals(ticket, robot.put(bag));
+
+        verify(locker1).getStatus();
+        verify(locker2).getStatus();
+        verify(locker1, never()).put(bag);
+        verify(locker2).put(bag);
+    }
 }
