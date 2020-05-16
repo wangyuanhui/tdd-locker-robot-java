@@ -1,5 +1,6 @@
 package cn.xpbootcamp.locker_robot.domain;
 
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,5 +19,9 @@ public class Robot {
         }
 
         throw new RuntimeException("All lockers are full");
+    }
+
+    public Bag take(Ticket ticket) {
+        return null;
     }
 }
