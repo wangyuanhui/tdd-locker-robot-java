@@ -10,11 +10,10 @@ public class Robot {
         this.lockers = Arrays.asList(lockers);
     }
 
-    public void put(Bag bag) {
+    public Ticket put(Bag bag) {
         for (Locker locker : lockers) {
             if (locker.getStatus() > 0) {
-                locker.put(bag);
-                return;
+                return locker.put(bag);
             }
         }
 
