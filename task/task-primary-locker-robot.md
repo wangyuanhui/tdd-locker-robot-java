@@ -12,3 +12,8 @@ when:存包  given: locker 1 is full, 2 is available        then: 存取成，�
 when:取包  given: ticket invalid                          then: 取包失败，得到失败信息
 
 when:取包  given: ticket valid                            then: 取包成功，返回包
+
+
+#### review
+1. taksing test 写错了
+2. Bag 存入null的 bug
