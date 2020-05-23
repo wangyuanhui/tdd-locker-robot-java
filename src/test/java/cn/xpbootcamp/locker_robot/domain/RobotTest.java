@@ -1,22 +1,13 @@
 package cn.xpbootcamp.locker_robot.domain;
 
 import cn.xpbootcamp.locker_robot.exception.LockersAreFullException;
-import cn.xpbootcamp.locker_robot.exception.TicketIsInvalidException;
 import cn.xpbootcamp.locker_robot.exception.TicketIsInvalidForRobotException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RobotTest {
 
@@ -46,10 +37,17 @@ public class RobotTest {
     }
 
     @Test
-    void should_return_ticket_of_locker2_when_put_given_locker1_is_full_and_locker2_available() {
-        Locker locker1 = new Locker(0);
+    void should_return_ticket_of_locker1_or_locker2_when_put_given_locker1_and_locker2_have_same_free_rooms() {
+        Locker locker1 = new Locker(2);
         Locker locker2 = new Locker(2);
-        // TODO
+        Robot robot = new Robot(locker1, locker2);
+        Bag bag = new Bag();
+        Ticket ticket = robot.put(bag);
+
+        assertNotNull(ticket);
+        int status1 = locker1.getStatus();
+        int status2 = locker2.getStatus();
+        assertTrue((status1 == 2 && status2 == 1) || (status1 == 1 && status2 == 2));
     }
 
     @Test
