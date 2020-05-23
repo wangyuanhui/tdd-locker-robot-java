@@ -11,95 +11,66 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 public class RobotTest {
-
-    @Mock
-    private Locker locker1;
-
-    @Mock
-    private Locker locker2;
 
     @Test
     void should_thrown_exception_when_put_given_all_lockers_full() {
+        Locker locker1 = new Locker(0);
+        Locker locker2 = new Locker(0);
         Robot robot = new Robot(locker1, locker2);
-        when(locker1.getStatus()).thenReturn(0);
-        when(locker2.getStatus()).thenReturn(0);
-        Bag bag = mock(Bag.class);
+        Bag bag = new Bag();
 
         assertThrows(LockersAreFullException.class, () -> robot.put(bag));
-
-        verify(locker1).getStatus();
-        verify(locker2).getStatus();
-        verify(locker1, never()).put(bag);
-        verify(locker2, never()).put(bag);
     }
 
     @Test
-    void should_return_ticket_of_locker1_when_put_given_locker1_available_and_locker2_available() {
+    void should_return_ticket_of_locker2_when_put_given_locker2_has_most_free_rooms() {
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(2);
         Robot robot = new Robot(locker1, locker2);
-        Bag bag = mock(Bag.class);
-        Ticket ticket = mock(Ticket.class);
-        when(locker1.getStatus()).thenReturn(2);
-        when(locker2.getStatus()).thenReturn(3);
-        when(locker1.put(bag)).thenReturn(ticket);
+        Bag bag = new Bag();
 
-        assertEquals(ticket, robot.put(bag));
+        Ticket ticket = robot.put(bag);
 
-        verify(locker1).getStatus();
-        verify(locker2, never()).getStatus();
-        verify(locker1).put(bag);
-        verify(locker2, never()).put(bag);
+        assertNotNull(ticket);
+        assertEquals(1, locker1.getStatus());
+        assertEquals(1, locker2.getStatus());
+        assertEquals(bag, locker2.take(ticket));
     }
 
     @Test
     void should_return_ticket_of_locker2_when_put_given_locker1_is_full_and_locker2_available() {
-        Robot robot = new Robot(locker1, locker2);
-        Bag bag = mock(Bag.class);
-        Ticket ticket = mock(Ticket.class);
-        when(locker1.getStatus()).thenReturn(0);
-        when(locker2.getStatus()).thenReturn(3);
-        when(locker2.put(bag)).thenReturn(ticket);
-
-        assertEquals(ticket, robot.put(bag));
-
-        verify(locker1).getStatus();
-        verify(locker2).getStatus();
-        verify(locker1, never()).put(bag);
-        verify(locker2).put(bag);
+        Locker locker1 = new Locker(0);
+        Locker locker2 = new Locker(2);
+        // TODO
     }
 
     @Test
     void should_throw_exception_when_take_given_ticket_invalid() {
+        Locker locker1 = new Locker(0);
+        Locker locker2 = new Locker(2);
         Robot robot = new Robot(locker1, locker2);
-        Ticket ticket = mock(Ticket.class);
-        when(locker1.take(ticket)).thenThrow(TicketIsInvalidException.class);
-        when(locker2.take(ticket)).thenThrow(TicketIsInvalidException.class);
+        Ticket ticket = new Ticket();
 
         assertThrows(TicketIsInvalidForRobotException.class, () -> robot.take(ticket));
-
-        verify(locker1).take(ticket);
-        verify(locker2).take(ticket);
     }
 
     @Test
     void should_return_bag_exception_when_take_given_ticket_valid() {
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(2);
         Robot robot = new Robot(locker1, locker2);
-        Bag bag = mock(Bag.class);
-        Ticket ticket = mock(Ticket.class);
-        when(locker1.take(ticket)).thenThrow(TicketIsInvalidException.class);
-        when(locker2.take(ticket)).thenReturn(bag);
+        Bag bag = new Bag();
+
+        Ticket ticket = robot.put(bag);
 
         assertEquals(bag, robot.take(ticket));
-
-        verify(locker1).take(ticket);
-        verify(locker2).take(ticket);
     }
 }
