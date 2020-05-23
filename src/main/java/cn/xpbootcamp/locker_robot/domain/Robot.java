@@ -15,13 +15,20 @@ public class Robot {
     }
 
     public Ticket put(Bag bag) {
+        int max = 0;
+        Locker putLocker = null;
         for (Locker locker : lockers) {
-            if (locker.getStatus() > 0) {
-                return locker.put(bag);
+            if (locker.getStatus() > max) {
+                max = locker.getStatus();
+                putLocker = locker;
             }
         }
 
-        throw new LockersAreFullException();
+        if (putLocker == null) {
+            throw new LockersAreFullException();
+        }
+
+        return putLocker.put(bag);
     }
 
     public Bag take(Ticket ticket) {
