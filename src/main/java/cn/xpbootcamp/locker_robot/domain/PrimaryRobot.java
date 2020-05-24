@@ -7,28 +7,22 @@ import cn.xpbootcamp.locker_robot.exception.TicketIsInvalidForRobotException;
 import java.util.Arrays;
 import java.util.List;
 
-public class Robot {
+public class PrimaryRobot {
+
     private List<Locker> lockers;
 
-    public Robot(Locker... lockers) {
+    public PrimaryRobot(Locker... lockers) {
         this.lockers = Arrays.asList(lockers);
     }
 
     public Ticket put(Bag bag) {
-        int max = 0;
-        Locker putLocker = null;
         for (Locker locker : lockers) {
-            if (locker.getStatus() > max) {
-                max = locker.getStatus();
-                putLocker = locker;
+            if (locker.getFreeNum() > 0) {
+                return locker.put(bag);
             }
         }
 
-        if (putLocker == null) {
-            throw new LockersAreFullException();
-        }
-
-        return putLocker.put(bag);
+        throw new LockersAreFullException();
     }
 
     public Bag take(Ticket ticket) {

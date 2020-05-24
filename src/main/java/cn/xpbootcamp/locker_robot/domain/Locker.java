@@ -31,7 +31,7 @@ public class Locker {
         return rooms.remove(ticket);
     }
 
-    public int getStatus() {
+    public int getFreeNum() {
         return roomsCount - rooms.size();
     }
 }

@@ -58,21 +58,21 @@ public class LockerTest {
     @Test
     void should_return_room_count_decrease_when_check_locker_status_given_bag_in_it() {
         Locker locker = new Locker(2);
-        assertEquals(2, locker.getStatus());
+        assertEquals(2, locker.getFreeNum());
 
         locker.put(new Bag());
-        assertEquals(1, locker.getStatus());
+        assertEquals(1, locker.getFreeNum());
     }
 
     @Test
     void should_return_room_count_increase_when_check_locker_status_given_bag_out() {
         Locker locker = new Locker(2);
-        assertEquals(2, locker.getStatus());
+        assertEquals(2, locker.getFreeNum());
 
         Ticket ticket = locker.put(new Bag());
-        assertEquals(1, locker.getStatus());
+        assertEquals(1, locker.getFreeNum());
 
         locker.take(ticket);
-        assertEquals(2, locker.getStatus());
+        assertEquals(2, locker.getFreeNum());
     }
 }
