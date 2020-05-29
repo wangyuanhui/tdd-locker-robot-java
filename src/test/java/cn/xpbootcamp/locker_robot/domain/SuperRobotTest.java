@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SuperRobotTest {
 
@@ -23,17 +22,20 @@ public class SuperRobotTest {
 
     @Test
     void should_return_ticket_of_locker2_when_put_given_locker_1_has_1_free_in_3_locker_2_has_2_free_in_3() {
-//        Locker locker1 = new Locker(1);
-//        Locker locker2 = new Locker(2);
-//        SuperRobot superRobot = new SuperRobot(locker1, locker2);
-//        Bag bag = new Bag();
-//
-//        Ticket ticket = superRobot.put(bag);
-//
-//        assertNotNull(ticket);
-//        assertEquals(1, locker1.getFreeNum());
-//        assertEquals(1, locker2.getFreeNum());
-//        assertEquals(bag, locker2.take(ticket));
+        Locker locker1 = new Locker(3);
+        Locker locker2 = new Locker(3);
+        SuperRobot superRobot = new SuperRobot(locker1, locker2);
+        Bag bag = new Bag();
+        locker1.put(new Bag());
+        locker1.put(new Bag());
+        locker2.put(new Bag());
+
+        Ticket ticket = superRobot.put(bag);
+
+        assertNotNull(ticket);
+        assertEquals(1, locker1.getFreeNum());
+        assertEquals(1, locker2.getFreeNum());
+        assertEquals(bag, locker2.take(ticket));
     }
 
     @Test
