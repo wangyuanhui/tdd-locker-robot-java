@@ -34,4 +34,8 @@ public class Locker {
     public int getFreeNum() {
         return roomsCount - rooms.size();
     }
+
+    public float getFreeRate() {
+        return (float) (roomsCount - rooms.size()) / roomsCount;
+    }
 }

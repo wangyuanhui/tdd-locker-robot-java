@@ -16,11 +16,11 @@ public class SuperRobot {
     }
 
     public Ticket put(Bag bag) {
-        int max = 0;
+        float max = 0;
         Locker putLocker = null;
         for (Locker locker : lockers) {
-            if (locker.getFreeNum() > max) {
-                max = locker.getFreeNum();
+            if (locker.getFreeRate() > max) {
+                max = locker.getFreeRate();
                 putLocker = locker;
             }
         }
