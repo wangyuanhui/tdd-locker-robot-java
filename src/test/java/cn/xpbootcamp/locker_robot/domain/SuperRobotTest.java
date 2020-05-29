@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SuperRobotTest {
 
@@ -57,20 +58,25 @@ public class SuperRobotTest {
     }
 
     @Test
-    void should_return_ticket_of_locker1_or_locker2_when_put_given_locker1_and_locker2_have_same_free_rate() {
-//        Locker locker1 = new Locker(2);
-//        Locker locker2 = new Locker(2);
-//        Locker locker3 = new Locker(1);
-//        SuperRobot superRobot = new SuperRobot(locker1, locker2);
-//        Bag bag = new Bag();
-//        Ticket ticket = superRobot.put(bag);
-//
-//        assertNotNull(ticket);
-//        int free1 = locker1.getFreeNum();
-//        int free2 = locker2.getFreeNum();
-//        int free3 = locker3.getFreeNum();
-//        assertEquals(1, free3);
-//        assertTrue((free1 == 2 && free2 == 1) || (free1 == 1 && free2 == 2));
+    void should_return_ticket_of_locker1_or_locker2_when_put_given_locker1_and_locker2_have_same_most_free_rate() {
+        Locker locker1 = new Locker(2);
+        Locker locker2 = new Locker(4);
+        Locker locker3 = new Locker(1);
+        SuperRobot superRobot = new SuperRobot(locker1, locker2);
+        locker1.put(new Bag());
+        locker2.put(new Bag());
+        locker2.put(new Bag());
+        locker3.put(new Bag());
+
+        Bag bag = new Bag();
+        Ticket ticket = superRobot.put(bag);
+
+        assertNotNull(ticket);
+        int free1 = locker1.getFreeNum();
+        int free2 = locker2.getFreeNum();
+        int free3 = locker3.getFreeNum();
+        assertEquals(0, free3);
+        assertTrue((free1 == 0 && free2 == 2) || (free1 == 1 && free2 == 1));
     }
 
     @Test
