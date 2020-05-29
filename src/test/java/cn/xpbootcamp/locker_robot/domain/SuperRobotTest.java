@@ -25,10 +25,10 @@ public class SuperRobotTest {
         Locker locker1 = new Locker(3);
         Locker locker2 = new Locker(3);
         SuperRobot superRobot = new SuperRobot(locker1, locker2);
-        Bag bag = new Bag();
         locker1.put(new Bag());
         locker1.put(new Bag());
         locker2.put(new Bag());
+        Bag bag = new Bag();
 
         Ticket ticket = superRobot.put(bag);
 
@@ -40,17 +40,20 @@ public class SuperRobotTest {
 
     @Test
     void should_return_ticket_of_locker1_when_put_given_locker2_has_1_free_in_2_locker2_has_1_free_in_3() {
-//        Locker locker1 = new Locker(2);
-//        Locker locker2 = new Locker(1);
-//        SuperRobot superRobot = new SuperRobot(locker1, locker2);
-//        Bag bag = new Bag();
-//
-//        Ticket ticket = superRobot.put(bag);
-//
-//        assertNotNull(ticket);
-//        assertEquals(1, locker1.getFreeNum());
-//        assertEquals(1, locker2.getFreeNum());
-//        assertEquals(bag, locker1.take(ticket));
+        Locker locker1 = new Locker(2);
+        Locker locker2 = new Locker(3);
+        SuperRobot superRobot = new SuperRobot(locker1, locker2);
+        locker1.put(new Bag());
+        locker2.put(new Bag());
+        locker2.put(new Bag());
+        Bag bag = new Bag();
+
+        Ticket ticket = superRobot.put(bag);
+
+        assertNotNull(ticket);
+        assertEquals(0, locker1.getFreeNum());
+        assertEquals(1, locker2.getFreeNum());
+        assertEquals(bag, locker1.take(ticket));
     }
 
     @Test
